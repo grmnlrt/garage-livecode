@@ -34,6 +34,11 @@ const fetchAllCars = () => {
     });
 };
 
+// 1. Add an event listener on the form
+// 2. Prevent default behavior when we submit it
+// 3. Recover data entered by the user
+// 4. Send a POST ajax request to the API
+// 5. Refresh cars list
 
 const createNewCar = () => {
   const car = {
