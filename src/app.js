@@ -1,70 +1,17 @@
+import { fetchAllCars, createNewCar, postNewCar } from './car';
+
 // TODO: Build an awesome garage!
-
-// 1. send ajax request to fetch all cars
-// 2. for each cars
-//   3. Insert a new row in the car table
-const apiUrl = "https://wagon-garage-api.herokuapp.com/test-221/cars";
-
-const fetchAllCars = () => {
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then((data) => {
-      const list = document.querySelector('.cars-list');
-      list.innerHTML = "";
-      data.forEach((car) => {
-        const brand = car.brand;
-        const model = car.model;
-        const owner = car.owner;
-        const plate = car.plate;
-
-        const row = `
-          <div class="car">
-            <div class="car-image">
-              <img src="http://loremflickr.com/280/280/${brand} ${model}" />
-            </div>
-            <div class="car-info">
-              <h4>${brand} ${model}</h4>
-              <p><strong>Owner:</strong> ${owner}</p>
-              <p><strong>Plate:</strong> ${plate}</p>
-            </div>
-          </div>
-        `;
-        list.insertAdjacentHTML('beforeend', row);
-      });
-    });
-};
-
-// 1. Add an event listener on the form
-// 2. Prevent default behavior when we submit it
-// 3. Recover data entered by the user
-// 4. Send a POST ajax request to the API
-// 5. Refresh cars list
-
-const createNewCar = () => {
-  const car = {
-    brand: document.getElementById('brand').value,
-    model: document.getElementById('model').value,
-    plate: document.getElementById('plate').value,
-    owner: document.getElementById('owner').value
-  };
-  return car;
-};
-
-const postNewCar = (car) => {
-  fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(car)
-  }).then(fetchAllCars());
-};
+const apiUrl = "https://wagon-garage-api.herokuapp.com/ma-benz/cars";
 
 const form = document.getElementById('new-car');
+// 1. Add an event listener on the form
 form.addEventListener('submit', (event) => {
+  // 2. Prevent default behavior when we submit it
   event.preventDefault();
+  // 3. Recover data entered by the user
   const car = createNewCar();
-  postNewCar(car);
+  // 4. Send a POST ajax request to the API
+  postNewCar(apiUrl, car);
 });
 
-fetchAllCars();
+fetchAllCars(apiUrl);
